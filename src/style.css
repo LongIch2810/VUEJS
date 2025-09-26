@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+/* đăng ký plugin scrollbar */
+@plugin "tailwind-scrollbar";
+
+/* nếu bạn muốn thêm cấu hình tùy (nocompatible, preferredStrategy) */
+@plugin "tailwind-scrollbar" {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
+
+@plugin "tailwindcss-animated";
+
+@theme {
+  --color-primary: oklch(21% 0.034 264.665);
+}
+
+.scrollbar-default {
+  @apply scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-900 hover:scrollbar-thumb-gray-500;
+}
