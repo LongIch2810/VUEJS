@@ -20,7 +20,7 @@
               </template>
             </Button>
             <div
-              class="absolute left-0 top-8 mt-2 w-48 bg-primary rounded-lg shadow-lg group-hover:block hidden animate-fade-down animate-duration-500 max-h-[500px] overflow-y-auto scrollbar-default"
+              class="absolute left-0 top-8 mt-2 w-44 bg-primary rounded-lg shadow-lg group-hover:block hidden animate-fade-down animate-duration-500 max-h-[400px] overflow-y-auto scrollbar-default"
             >
               <HeaderItem
                 v-for="cat in categories"
@@ -47,7 +47,7 @@
             <div
               class="absolute top-0 right-0 w-4 h-4 bg-white text-black flex items-center justify-center rounded-full"
             >
-              <span>0</span>
+              <span>{{ totalProducts || 0 }}</span>
             </div>
           </div>
 
@@ -59,10 +59,15 @@
               </template>
             </Button>
             <div
-              class="absolute left-0 top-8 mt-2 w-48 bg-primary rounded-lg shadow-lg group-hover:block hidden animate-fade-down animate-duration-500 max-h-[500px] overflow-y-auto scrollbar-default"
+              class="absolute left-0 top-6 mt-2 w-32 bg-primary rounded-lg shadow-lg group-hover:block hidden animate-fade-down animate-duration-500 max-h-[500px] overflow-y-auto scrollbar-default"
             >
               <HeaderItem name="Profile" link="/profile" />
-              <HeaderItem name="Logout" link="/logout" />
+              <Button class="hover:text-indigo-400" @click="logout">
+                Logout
+                <template #icon>
+                  <ArrowRightOnRectangleIcon class="w-5 h-5" />
+                </template>
+              </Button>
             </div>
           </div>
 
@@ -139,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 
 // Heroicons
@@ -148,15 +153,18 @@ import {
   UserIcon,
   Bars3Icon,
   ChevronDownIcon,
+  ArrowRightOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
 import HeaderItem from "../HeaderItem.vue";
 import Button from "../Button.vue";
 import { useAuthStore } from "../../stores/auth";
+import { useCartStore } from "../../stores/cart";
 
 const open = ref(false);
 const openProducts = ref(false);
 const categories = ref([]);
-const { isLogged } = useAuthStore();
+const { totalProducts } = useCartStore();
+const { isLogged, logout } = useAuthStore();
 
 const toggleMenu = () => (open.value = !open.value);
 const closeMenu = () => {

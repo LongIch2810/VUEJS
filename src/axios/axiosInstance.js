@@ -1,13 +1,12 @@
 // utils/axios.js
 import axios from "axios";
-import { useAuthStore } from "@/stores/auth"; // import pinia store
+import { useAuthStore } from "../stores/auth"; // import pinia store
 
 const axiosInstance = axios.create({
   baseURL: "https://dummyjson.com",
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // để gửi cookie nếu có
 });
 
 // ----------------- REQUEST INTERCEPTOR -----------------

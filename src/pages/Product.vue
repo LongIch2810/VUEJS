@@ -67,8 +67,10 @@ import useFetch from "../components/hooks/useFetch";
 import Paginate from "vuejs-paginate-next";
 import ProductCardSkeleton from "../components/skeleton/ProductCardSkeleton.vue";
 import { MagnifyingGlassIcon } from "@heroicons/vue/24/solid";
+import { useCartStore } from "../stores/cart";
 const route = useRoute();
 const router = useRouter();
+const { addToCart } = useCartStore();
 
 //Khởi tạo trang
 const page = ref(Number(route.query.page) || 1);
@@ -108,11 +110,6 @@ const totalPages = computed(() => {
     : dataFetch?.value?.total;
   return Math.ceil(total / limit.value);
 });
-
-//Thêm sản phẩm vào giỏ hàng
-const addToCart = (product) => {
-  console.log("Thêm vào giỏ:", product);
-};
 
 //Xử lý khi click tìm kiếm
 const onSearchApi = async () => {

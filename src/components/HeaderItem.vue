@@ -1,10 +1,12 @@
 <template>
   <div class="p-2">
     <router-link :to="link" :class="['hover:text-indigo-400']" v-bind="$attrs">
-      <slot name="icon"></slot>
-      <span v-if="name">
-        {{ name }}
-      </span>
+      <div class="flex items-center gap-x-1">
+        <span v-if="name">
+          {{ name }}
+        </span>
+        <slot name="icon"></slot>
+      </div>
     </router-link>
   </div>
 </template>

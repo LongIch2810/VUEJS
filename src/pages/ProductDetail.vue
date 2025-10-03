@@ -41,14 +41,16 @@
 
       <!-- Giá -->
       <div class="flex items-baseline gap-3">
-        <p class="text-3xl font-bold text-amber-600">${{ product.price }}</p>
+        <p class="text-3xl font-bold text-amber-600">
+          ${{
+            Math.round(product.price * (1 - product.discountPercentage / 100))
+          }}
+        </p>
         <span
           class="text-sm line-through text-gray-400"
           v-if="product.discountPercentage"
         >
-          ${{
-            (product.price / (1 - product.discountPercentage / 100)).toFixed(2)
-          }}
+          ${{ product.price }}
         </span>
         <p
           v-if="product.discountPercentage"

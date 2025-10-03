@@ -2,7 +2,7 @@
   <button
     :class="[
       color,
-      'px-4 py-2 rounded flex items-center justify-center gap-1',
+      'p-2 rounded flex items-center justify-center gap-1 cursor-pointer',
       $attrs.class,
     ]"
     :type="type"

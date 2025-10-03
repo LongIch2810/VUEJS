@@ -50,15 +50,15 @@
       <!-- Giá -->
       <div class="flex items-baseline gap-2 mt-2">
         <span class="text-xl font-bold text-amber-600">
-          ${{ product.price }}
+          ${{
+            Math.round(product.price * (1 - product.discountPercentage / 100))
+          }}
         </span>
         <span
           class="text-sm line-through text-gray-400"
           v-if="product.discountPercentage"
         >
-          ${{
-            (product.price / (1 - product.discountPercentage / 100)).toFixed(2)
-          }}
+          ${{ product.price }}
         </span>
       </div>
 
@@ -77,7 +77,12 @@
           Chi tiết
         </RouterLink>
         <button
-          @click="$emit('add-to-cart', product)"
+          @click="
+            addToCart({
+              userId: user?.id,
+              products: [{ id: product.id, quantity: 1 }],
+            })
+          "
           class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition"
         >
           Thêm giỏ hàng
@@ -89,6 +94,8 @@
 
 <script setup>
 import { StarIcon } from "@heroicons/vue/24/solid";
+import { useAuthStore } from "../stores/auth";
+import { useCartStore } from "../stores/cart";
 defineProps({
   product: {
     type: Object,
@@ -96,7 +103,8 @@ defineProps({
     validator: (p) => "id" in p,
   },
 });
-defineEmits(["add-to-cart"]);
+const { user } = useAuthStore();
+const { addToCart } = useCartStore();
 </script>
 
 <style scoped>

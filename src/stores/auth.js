@@ -1,8 +1,8 @@
 // stores/auth.js
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
+import axiosIntsance from "../axios/axiosInstance";
 
 export const useAuthStore = defineStore(
   "auth",
@@ -24,8 +24,8 @@ export const useAuthStore = defineStore(
 
       loading.value = true;
       try {
-        const res = await axios.post(
-          "https://dummyjson.com/user/login",
+        const res = await axiosIntsance.post(
+          "/user/login",
           {
             username: username.trim(),
             password: password.trim(),
@@ -68,17 +68,11 @@ export const useAuthStore = defineStore(
       loading.value = true;
 
       try {
-        await axios.post(
-          "https://dummyjson.com/users/add",
-          {
-            email: email.trim(),
-            username: username.trim(),
-            password: password.trim(),
-          },
-          {
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        await axiosIntsance.post("/users/add", {
+          email: email.trim(),
+          username: username.trim(),
+          password: password.trim(),
+        });
 
         alert("Đăng ký thành công !");
         router.push("/login");
@@ -100,7 +94,7 @@ export const useAuthStore = defineStore(
 
     const refresh = async () => {
       try {
-        const res = await axios.post("https://dummyjson.com/auth/refresh", {
+        const res = await axiosIntsance.post("/auth/refresh", {
           refreshToken: refreshToken.value,
           expiresInMins: 30,
         });
